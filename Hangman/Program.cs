@@ -8,7 +8,6 @@ namespace Hangman
         const int MAX_GUESSES = 10;
         static void Main(string[] args)
         {
-            
             Console.WriteLine("Welcome to the HANGMAN game");
             Console.WriteLine($"Try to guess a word. You will have {MAX_GUESSES} tries");
             Console.WriteLine("Press any key to continue");
@@ -20,9 +19,8 @@ namespace Hangman
                 List<string> list = new List<string>() { "Milk", "Books", "Paper", "Watermellon", "Rabbit" };
 
                 Random rng = new Random();
-                int random = rng.Next(list.Count);
 
-                string randomWord = list[random];
+                string randomWord = list[rng.Next(list.Count)];
 
                 List<string> letters = new List<string>();
 
@@ -30,7 +28,6 @@ namespace Hangman
 
                 while (guesses < MAX_GUESSES)
                 {
-
                     int charToGuess = 0;
 
                     foreach (char character in randomWord.ToLower())
@@ -78,6 +75,8 @@ namespace Hangman
             };
 
             string question = "y";
+
+
 
             while (question == "y")
             {

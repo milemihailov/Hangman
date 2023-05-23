@@ -14,30 +14,28 @@ namespace Hangman
             Console.ReadKey();
             Console.Clear();
 
-            static void Game() {
+            Random rng = new Random();
 
-                List<string> list = new List<string>() { "Milk", "Books", "Paper", "Watermellon", "Rabbit" };
+            List<string> list = new List<string>() { "Milk", "Books", "Paper", "Watermellon", "Rabbit" };
+            List<char> lettersFromUser = new List<char>();            // list of letters that user inputs
 
-                Random rng = new Random();
+            string question = "y";                                    // variable to determine if the user wants to play more
+            int guesses = 0;                                          // variable to keep track how much guesses are left
 
-                string randomWord = list[rng.Next(list.Count)];
-
-                List<char> letters = new List<char>();
-
-                int guesses = 0;
+            while (question == "y")
+            {
+                string randomWord = list[rng.Next(list.Count)];           // getting a random word from list
 
                 while (guesses < MAX_GUESSES)
                 {
-                    int charToGuess = 0;
+                    Console.Clear();
+                    int charToGuess = 0;                             // variable that keeps track if you won the game
 
                     foreach (char character in randomWord)
                     {
-
-                        char letter = Char.ToLower(character);
-
-                        if (letters.Contains(letter))
+                        if (lettersFromUser.Contains(Char.ToLower(character)))
                         {
-                            Console.Write(letter);
+                            Console.Write(character);
                         }
                         else
                         {
@@ -45,7 +43,6 @@ namespace Hangman
                             charToGuess++;
                         }
                     }
-                    Console.WriteLine(string.Empty);
 
                     if (charToGuess == 0)
                     {
@@ -54,38 +51,46 @@ namespace Hangman
                         break;
                     }
 
-                    Console.WriteLine($" You have only {MAX_GUESSES - guesses} guesses. ");
+                    Console.WriteLine($"\nYou have only {MAX_GUESSES - guesses} guesses. ");
                     Console.Write("Type a letter!  ");
 
-                    char input = Char.ToLower( Console.ReadKey().KeyChar);
+                    char input = Char.ToLower(Console.ReadKey().KeyChar);       // get user input 
 
-                    letters.Add(input);
+                    if (!lettersFromUser.Contains(input))
+                    {
+                        lettersFromUser.Add(input);                             // add user input to the list of char
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("You already have chosen that letter. \nPress any key to continue.");
+                        Console.ReadKey();
+                        continue;
+                    }
 
                     if (!randomWord.Contains(input))
                     {
-                        guesses++;
+                        guesses++;                // increment guesses if character is not guessed and not repeated
                     }
-                    Console.Clear();
+
                     if (guesses >= MAX_GUESSES)
                     {
+                        Console.Clear();
                         Console.WriteLine("You lost \nYou have no more tries left");
                         Console.WriteLine($"The word was {randomWord}");
                     }
-                }
-            };
 
-            string question = "y";
-
-
-
-            while (question == "y")
-            {
-                Game();
-                Console.WriteLine("Would you like to play again!");
+                };
+                Console.WriteLine("\nWould you like to play again!");
                 Console.WriteLine("Choose yes or no");
                 Console.WriteLine("y/n");
                 question = Console.ReadKey().Key.ToString().ToLower();
-                Console.Clear();
+                if (question == "y")
+                {
+                    guesses = 0;
+                    lettersFromUser.Clear();
+                }
+                
             }
 
         }

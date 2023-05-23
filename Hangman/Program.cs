@@ -22,7 +22,7 @@ namespace Hangman
 
                 string randomWord = list[rng.Next(list.Count)];
 
-                List<string> letters = new List<string>();
+                List<char> letters = new List<char>();
 
                 int guesses = 0;
 
@@ -30,10 +30,10 @@ namespace Hangman
                 {
                     int charToGuess = 0;
 
-                    foreach (char character in randomWord.ToLower())
+                    foreach (char character in randomWord)
                     {
 
-                        string letter = character.ToString();
+                        char letter = Char.ToLower(character);
 
                         if (letters.Contains(letter))
                         {
@@ -57,7 +57,7 @@ namespace Hangman
                     Console.WriteLine($" You have only {MAX_GUESSES - guesses} guesses. ");
                     Console.Write("Type a letter!  ");
 
-                    string input = Console.ReadKey().Key.ToString().ToLower();
+                    char input = Char.ToLower( Console.ReadKey().KeyChar);
 
                     letters.Add(input);
 
@@ -86,7 +86,6 @@ namespace Hangman
                 Console.WriteLine("y/n");
                 question = Console.ReadKey().Key.ToString().ToLower();
                 Console.Clear();
-                
             }
 
         }

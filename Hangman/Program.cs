@@ -17,7 +17,7 @@ namespace Hangman
             Random rng = new Random();
 
             List<string> list = new List<string>() { "Milk", "Books", "Paper", "Watermellon", "Rabbit" };
-            List<char> lettersFromUser = new List<char>();            // list of letters that user inputs
+            List<char> guessedLetters = new List<char>();            // every guessed letter by the user gets added to this list if not already present
 
             string question = "y";                                    // variable to determine if the user wants to play more
             int guesses = 0;                                          // variable to keep track how much guesses are left
@@ -33,7 +33,7 @@ namespace Hangman
 
                     foreach (char character in randomWord)
                     {
-                        if (lettersFromUser.Contains(Char.ToLower(character)))
+                        if (guessedLetters.Contains(Char.ToLower(character)))
                         {
                             Console.Write(character);
                         }
@@ -56,9 +56,9 @@ namespace Hangman
 
                     char input = Char.ToLower(Console.ReadKey().KeyChar);       // get user input 
 
-                    if (!lettersFromUser.Contains(input))
+                    if (!guessedLetters.Contains(input))
                     {
-                        lettersFromUser.Add(input);                             // add user input to the list of char
+                        guessedLetters.Add(input);                             // add user input to the list of char
                     }
                     else
                     {
@@ -81,14 +81,14 @@ namespace Hangman
                     }
 
                 };
-                Console.WriteLine("\nWould you like to play again!");
+                Console.WriteLine("\nWould you like to play again!"); 
                 Console.WriteLine("Choose yes or no");
                 Console.WriteLine("y/n");
                 question = Console.ReadKey().Key.ToString().ToLower();
                 if (question == "y")
                 {
                     guesses = 0;
-                    lettersFromUser.Clear();
+                    guessedLetters.Clear();
                 }
                 
             }
